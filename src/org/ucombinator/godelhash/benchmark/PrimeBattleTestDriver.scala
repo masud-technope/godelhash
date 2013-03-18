@@ -2,8 +2,8 @@ package org.ucombinator.godelhash.benchmark
 import org.ucombinator.godelhash.mathmatics.numbertheory.PrimeHashable
 import org.ucombinator.godelhash.mathmatics.numbertheory.Primes
 import org.ucombinator.godelhash.godelhash.MutablePrimeSet
-import org.combinator.godelhash.utils.Utils
-import org.combinator.godelhash.utils.JavaMutableSortedSet
+import org.ucombinator.godelhash.utils.Utils
+import org.ucombinator.godelhash.utils.JavaMutableSortedSet
 
 object PrimeBattleTestDriver extends Utils {
 

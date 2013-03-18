@@ -1,6 +1,6 @@
 package org.ucombinator.godelhash.benchmark
 import org.ucombinator.godelhash.mathmatics.numbertheory.PrimeHashable
-import org.combinator.godelhash.utils.Utils
+import org.ucombinator.godelhash.utils.Utils
 import org.ucombinator.godelhash.mathmatics.numbertheory.Primes
 
 object ManySetTest extends Utils {

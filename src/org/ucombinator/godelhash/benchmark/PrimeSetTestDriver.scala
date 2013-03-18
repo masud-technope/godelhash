@@ -3,7 +3,7 @@ import org.ucombinator.godelhash.mathmatics.numbertheory.PrimeHashable
 import org.ucombinator.godelhash.mathmatics.numbertheory.Primes
 import org.ucombinator.godelhash.godelhash.PrimeSet
 import scala.collection.immutable.TreeSet
-import org.combinator.godelhash.utils.Utils
+import org.ucombinator.godelhash.utils.Utils
 
 object PrimeSetTestDriver extends Utils{
   import Benchmark._
