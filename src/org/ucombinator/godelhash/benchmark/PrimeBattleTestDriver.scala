@@ -2,8 +2,10 @@ package org.ucombinator.godelhash.benchmark
 import org.ucombinator.godelhash.mathmatics.numbertheory.PrimeHashable
 import org.ucombinator.godelhash.mathmatics.numbertheory.Primes
 import org.ucombinator.godelhash.godelhash.MutablePrimeSet
+import org.combinator.godelhash.utils.Utils
+import org.combinator.godelhash.utils.JavaMutableSortedSet
 
-object PrimeBattleTestDriver  {
+object PrimeBattleTestDriver extends Utils {
 
   import Benchmark._
 
@@ -18,50 +20,117 @@ object PrimeBattleTestDriver  {
     val members = measureTime ("generating primes: ") { Primes.primes.take(setSize).toList }
     val members2 = members.take(setSize/2)
 
-    // println("members: " + members) ;
+ 
 
-    val sortedSet = measureTime ("adding to sorted set: ") {  
-      scala.collection.immutable.TreeSet[BigInt]() ++   members }
+    
+    val memberss1 = take_rands(5, setSize, members) 
+    val memberss2 = memberss1.take(2)
+    
+ //   val sortedSet = measureTime ("adding to sorted set: ") {  
+//      scala.collection.immutable.TreeSet[BigInt]() ++   memberss1 }
 
-    val sortedSet2 = { scala.collection.immutable.TreeSet[BigInt]() ++ members }
+    val sortedSet2 = { scala.collection.immutable.SortedSet[BigInt]()  ++ memberss2 }
 
+    import java.util.TreeSet
+     val treeSet1 =  new TreeSet[String]()
+       measureTime ("adding to sorted mutable set: ") {  
+      
+         memberss1.foreach((m) => treeSet1.add(m.toString))
+       }
+     val treeSet2  =  new TreeSet[String]()
+       measureTime ("adding to sorted mutable set: ") {  
+         memberss2.foreach((m) => treeSet1.add(m.toString))
+       }
+    
     val primeSet = new MutablePrimeSet 
 
     val primeSet2 = new MutablePrimeSet
     
-    primeSet2 += (members2)
+    primeSet2 += (memberss2)
 
-    measureTime ("adding primes to set: ") { primeSet += members }
+    measureTime ("adding primes to set: ") { primeSet += memberss1 }
 
     val its = 1
 
+     val its2 = 10000000
     measureTime ("sortedSet.contains: ") {
-      repeat (its) {
-        for (m <- members) {
-          sortedSet.contains(m)
+      repeat (its2) {
+        for (m <- memberss1) {
+          treeSet1.contains(m.toString)
         }
       }
     }
 
     measureTime ("primeSet.contains: ") {
-      repeat (its) {
-        for (m <- members) {
+      repeat (its2) {
+        for (m <- memberss1) {
           primeSet.contains(m)
+        }
+      }
+    } 
+    
+    measureTime ("sortedSet.deletes: ") {
+      repeat (its2) {
+        for (m <- memberss1) {
+          treeSet1.remove(m.toString)
         }
       }
     }
 
-
-
-    measureTime ("prime, set2 <= set1: ") { 
-      repeat(10){
-        primeSet2 <= primeSet  } 
+    measureTime ("primeSet.delete: ") {
+      repeat (its2) {
+        for (m <- memberss1) {
+          primeSet -= m
+        }
       }
+    } 
 
+   
     measureTime ("sorted, set2 <= set1: ") { 
-      repeat(10){
-      sortedSet2 subsetOf sortedSet }
+      repeat(its2){
+        JavaMutableSortedSet.isSubset(treeSet2, treeSet1)
+       }
     }
+    
+    
+    measureTime ("prime, set2 <= set1: ") { 
+      repeat(its2){
+        primeSet2 <= primeSet } 
+      }
+    
+    
+    measureTime ("sorted, set2 intersect set1: ") { 
+      repeat(its2){
+      JavaMutableSortedSet.intersection(treeSet2, treeSet1)  }
+    }
+    
+    
+    measureTime ("prime, set2 intersect set1: ") { 
+      repeat(its2){
+        primeSet2 intersect primeSet  } 
+      }
+    
+     measureTime ("sorted, set2 diff set1: ") { 
+      repeat(its2){
+      JavaMutableSortedSet.difference(treeSet2, treeSet1) }
+    }
+    
+    
+    measureTime ("prime, set2 diff set1: ") { 
+      repeat(its2){
+        primeSet2 diff primeSet  } 
+      }
+    
+      
+     measureTime ("sorted, set2 union set1: ") { 
+      repeat(its2){
+      JavaMutableSortedSet.union(treeSet2, treeSet1)}
+    } 
+     
+    measureTime ("prime, set2 union set1: ") { 
+      repeat(its2){
+        primeSet2 union primeSet  } 
+      } 
     
   }
 }

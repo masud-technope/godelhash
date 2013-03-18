@@ -29,7 +29,7 @@ object ComparePrimeSet {
        repeat (n){
         sortedSet diff sortedSet2}
     }
-    measureTime ("prime  set1 differ  set2" )  { 
+    measureTime ("prime  set1 differ  set2: " )  { 
       repeat (n){
        primeSet diff  primeSet2
       }

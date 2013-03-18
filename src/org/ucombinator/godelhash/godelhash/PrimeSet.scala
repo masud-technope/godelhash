@@ -36,9 +36,9 @@ import scala.collection.immutable.SortedSet
      
   def - (a : A) : PrimeSet[A] = {
     val h = a.primeHash
-    if(comp % h == 0) this
+    if(comp % h == 0) new PrimeSet[A](comp/h, members -a)
     else
-      new PrimeSet[A](modop(comp, h), members -a)
+      this
   }
     
   override def hashCode() : Int = comp.hashCode()

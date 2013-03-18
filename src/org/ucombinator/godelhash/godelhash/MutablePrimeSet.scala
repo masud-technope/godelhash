@@ -21,6 +21,25 @@ class MutablePrimeSet {
     if (modop(setCode, h.primeHash) != 0)
       setCode *= h.primeHash 
   }
+  
+  def -= (h: PrimeHashable) {
+     if (modop(setCode, h.primeHash) == 0)
+       setCode = setCode/h.primeHash
+  }
+  
+  def union (set2 : MutablePrimeSet ) = {
+   this.setCode = (setCode * set2.setCode)/(setCode gcd set2.setCode)
+    
+  }
+   
+  def intersect(mps : MutablePrimeSet) {
+    this.setCode = setCode gcd mps.setCode
+  }
+  
+  def diff(mps: MutablePrimeSet) {
+    val setCode = this.setCode / (this.setCode gcd mps.setCode)
+  }
+
 
   def +=[A <% PrimeHashable] (ps : Iterable[A]) {
     var sub : List[BigInt] = List(1)
