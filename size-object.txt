@@ -1,0 +1,14 @@
+Firstly "the size of an object" isn't a well-defined concept in Java. You could mean the object itself, with just its members, the Object and all objects it refers to (the reference graph). You could mean the size in memory or the size on disk. And the JVM is allowed to optimise things like Strings.
+
+So the only correct way is to ask the JVM, which a good profiler (I use YourKit), which probably isn't what you want.
+
+However, from the description above it sounds like each row will be self-contained, and not have a big dependency tree, so the serialization method will probably be a good approximation on most JVMs. The easiest way to do this is as follows:
+
+Serializable ser;
+ ByteArrayOutputStream baos = new ByteArrayOutputStream();
+ ObjectOutputStream oos = new ObjectOutputStream(baos);
+ oos.writeObject(ser);
+ oos.close();
+ return baos.size();
+
+

@@ -40,7 +40,11 @@ import scala.collection.immutable.SortedSet
     else
       this
   }
-    
+  
+  def PSEqual(set2: PrimeSet[A]) : Boolean = {
+   this.isSubsetOf(set2) && set2.isSubsetOf(this)
+  } 
+  
   override def hashCode() : Int = comp.hashCode()
   override def equals (o : Any) = o match {
     case a : PrimeSet[_] => a.comp == comp

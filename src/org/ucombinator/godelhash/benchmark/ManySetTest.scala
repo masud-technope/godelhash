@@ -18,15 +18,25 @@ object ManySetTest extends Utils {
     // element space
      val members = measureTime ("generating primes: ") { Primes.primes.take(setSize).toList }
        
-     val allTestSets1 = genSetList(100,  setSize, members, 100000 )  
+       println("member Length: ", members.length)
+     val allTestSets1 = genSetList(2,  setSize, members, 10000 )  
      
-      val allTestSets2 = favorListSet(allTestSets1, 15)//genSetList(15,  setSize, members, 10000 ) //favorListSet(allTestSets1, 15) //genSetList(4,  setSize, members, 1000 )   
+      val allTestSets2 = favorListSet(allTestSets1, 1)//genSetList(15,  setSize, members, 10000 ) //favorListSet(allTestSets1, 15) //genSetList(4,  setSize, members, 1000 )   
       
-      println("gen finished")
+      println("set pairs gen finished")
       
       val testSetpairs = allTestSets2.zip(allTestSets1)
       
-      testSetpairs.foreach(println)
+      //testSetpairs.foreach(println)
+      println(testSetpairs.length)
+      
+      val allGodelRepresent1 = allTestSets1.map(_.comp)
+      println("space usage for all prime set ")
+      println(approximateSizeOfObjectS(allGodelRepresent1) /10000 )
+      
+      val allSortedRepresent1 = allTestSets1.map(_.members.toList)
+      println("space usage for all sorted set ")
+      println(approximateSizeOfObjectS(allSortedRepresent1) /10000 )
       
       measureTime ("------------ sorted  <=   "){ 
     
@@ -124,6 +134,20 @@ object ManySetTest extends Utils {
     
       for((primeSet1, primeSet2) <- testSetpairs){
          primeSet2 + primeSet1.members.head
+      }
+     }
+      
+        measureTime ("------------ sorted  equality   "){ 
+    
+      for((primeSet1, primeSet2) <- testSetpairs){
+         primeSet2.members.equals(primeSet1.members) 
+      }
+     }
+     
+      measureTime ("------------ prime  equality   "){ 
+    
+      for((primeSet1, primeSet2) <- testSetpairs){
+         primeSet2.PSEqual(primeSet1) 
       }
      }
       
