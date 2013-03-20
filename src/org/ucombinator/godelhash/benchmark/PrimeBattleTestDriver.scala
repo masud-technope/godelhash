@@ -23,7 +23,7 @@ object PrimeBattleTestDriver extends Utils {
  
 
     
-    val memberss1 = take_rands(5, setSize, members) 
+    val memberss1 = take_rands(5, setSize, members.map(_.toLong)) 
     val memberss2 = memberss1.take(2)
     
  //   val sortedSet = measureTime ("adding to sorted set: ") {  

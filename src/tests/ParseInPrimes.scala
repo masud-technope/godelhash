@@ -23,6 +23,9 @@ object ParseInPrimes {
     
       //buf.position(pos);
   }
+   
+   
+   
   
   def  showBufferData (
           buf: ByteBuffer ,  name: String){
@@ -77,10 +80,10 @@ object ParseInPrimes {
    ibs.close()
   }*/
    
- val newPrimes =  primes.asInstanceOf[List[Long]]
+// val newPrimes =  primes.asInstanceOf[List[Long]]
    
    
-     println(newPrimes.take(100))
+     println(primes.take(100))
     
     
     /*val source = scala.io.Source.fromFile(totalPrimes)

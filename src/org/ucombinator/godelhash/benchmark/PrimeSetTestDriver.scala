@@ -21,9 +21,9 @@ object PrimeSetTestDriver extends Utils{
    val members = measureTime ("generating primes: ") { Primes.primes.take(setSize).toList }
   
 
-    val ranmembers = take_rands(10, setSize, members)
+    val ranmembers = take_rands(10, setSize, members.map(_.toLong))
       val sortedSet = measureTime ("adding to sorted set: ") {  
-     scala.collection.immutable.TreeSet[BigInt]() ++   ranmembers }
+     scala.collection.immutable.TreeSet[Long]() ++   ranmembers }
     
     val primeSet  =    measureTime ("adding to prime set: ") { 
       
@@ -32,9 +32,9 @@ object PrimeSetTestDriver extends Utils{
     
     
     
-     val ranmembers2 = take_rands(5, setSize, members) //ranmembers.take(4)
+     val ranmembers2 = take_rands(5, setSize, members.map(_.toLong)) //ranmembers.take(4)
        val sortedSet2 =  
-     scala.collection.immutable.TreeSet[BigInt]() ++   ranmembers2 
+     scala.collection.immutable.TreeSet[Long]() ++   ranmembers2 
     val primeSet2  = {
       
       PrimeSet(ranmembers2: _* )  
@@ -57,8 +57,8 @@ object PrimeSetTestDriver extends Utils{
     ComparePrimeSet.compareDiff(its2, primeSet, primeSet2, sortedSet, sortedSet2)
      
     
-     ComparePrimeSet.compareContains(its, primeSet, primeSet2, sortedSet, sortedSet2, members)
-     ComparePrimeSet.compareDelete(its, primeSet, primeSet2, sortedSet, sortedSet2, members) 
+     ComparePrimeSet.compareContains(its, primeSet, primeSet2, sortedSet, sortedSet2, members.map(_.toLong))
+     ComparePrimeSet.compareDelete(its, primeSet, primeSet2, sortedSet, sortedSet2, members.map(_.toLong)) 
      
   }
 }

@@ -54,7 +54,7 @@ object SuperTest extends Utils{
      
      def primeNumbers = primes.take(universe).map(_.asInstanceOf[BigInt])
      
-      val allTestSets1 = genSetList(setSuperCardi,  universe, primeNumbers, numbersOfSetPairs )  
+      val allTestSets1 = genSetList(setSuperCardi,  universe, primeNumbers.map(_.toLong), numbersOfSetPairs )  
      
       val allTestSets2 = favorListSet(allTestSets1, subSetCardi)//genSetList(15,  setSize, members, 10000 ) //favorListSet(allTestSets1, 15) //genSetList(4,  setSize, members, 1000 )   
       

@@ -19,9 +19,9 @@ object ManySetTest extends Utils {
      val members = measureTime ("generating primes: ") { Primes.primes.take(setSize).toList }
        
        println("member Length: ", members.length)
-     val allTestSets1 = genSetList(2,  setSize, members, 10000 )  
+     val allTestSets1 = genSetList(20,  setSize, members.map(_.toLong), 1000 )  
      
-      val allTestSets2 = favorListSet(allTestSets1, 1)//genSetList(15,  setSize, members, 10000 ) //favorListSet(allTestSets1, 15) //genSetList(4,  setSize, members, 1000 )   
+      val allTestSets2 = favorListSet(allTestSets1, 5)//genSetList(15,  setSize, members, 10000 ) //favorListSet(allTestSets1, 15) //genSetList(4,  setSize, members, 1000 )   
       
       println("set pairs gen finished")
       
@@ -30,13 +30,11 @@ object ManySetTest extends Utils {
       //testSetpairs.foreach(println)
       println(testSetpairs.length)
       
-      val allGodelRepresent1 = allTestSets1.map(_.comp)
-      println("space usage for all prime set ")
-      println(approximateSizeOfObjectS(allGodelRepresent1) /10000 )
-      
-      val allSortedRepresent1 = allTestSets1.map(_.members.toList)
-      println("space usage for all sorted set ")
-      println(approximateSizeOfObjectS(allSortedRepresent1) /10000 )
+      val (ps, ss) = calcSpaceUsage(allTestSets1) 
+      println("space usage for all prime set ", ps)
+       
+      println("space usage for all sorted set ", ss)
+     
       
       measureTime ("------------ sorted  <=   "){ 
     

@@ -11,7 +11,12 @@ object ComparePrimeSet {
   def compare(that: BigInt) = primeHash.toInt  - that.toInt
  }
  
-  def compareInclusion(n : Int, primeSet: PrimeSet[BigInt], primeSet2: PrimeSet[BigInt], sortedSet: SortedSet[BigInt], sortedSet2: SortedSet[BigInt]) {
+ implicit def LongintToPH(i: Long) = new PrimeHashable with Ordered[Long]{
+  val primeHash: BigInt = BigInt(i)
+  def compare(that: Long) = primeHash.toInt  - that.toInt
+}
+ 
+  def compareInclusion(n : Int, primeSet: PrimeSet[Long], primeSet2: PrimeSet[Long], sortedSet: SortedSet[Long], sortedSet2: SortedSet[Long]) {
     
     measureTime ("sorted, set2 <= set1: ") { 
        repeat (n){
@@ -24,7 +29,7 @@ object ComparePrimeSet {
       } 
   }
   
-  def compareDiff(n : Int, primeSet: PrimeSet[BigInt], primeSet2: PrimeSet[BigInt], sortedSet: SortedSet[BigInt], sortedSet2: SortedSet[BigInt]) {
+  def compareDiff(n : Int, primeSet: PrimeSet[Long], primeSet2: PrimeSet[Long], sortedSet: SortedSet[Long], sortedSet2: SortedSet[Long]) {
     measureTime ("sorted, set1 differ set2 : ") { 
        repeat (n){
         sortedSet diff sortedSet2}
@@ -36,7 +41,7 @@ object ComparePrimeSet {
       } 
   }
   
-  def compareUnion(n : Int, primeSet: PrimeSet[BigInt], primeSet2: PrimeSet[BigInt], sortedSet: SortedSet[BigInt], sortedSet2: SortedSet[BigInt]) {
+  def compareUnion(n : Int, primeSet: PrimeSet[Long], primeSet2: PrimeSet[Long], sortedSet: SortedSet[Long], sortedSet2: SortedSet[Long]) {
     
      measureTime ("sorted, set2 union set1: ") { 
        repeat (n){
@@ -49,7 +54,7 @@ object ComparePrimeSet {
       } 
   }
   
-  def compareIntersect(n : Int, primeSet: PrimeSet[BigInt], primeSet2: PrimeSet[BigInt], sortedSet: SortedSet[BigInt], sortedSet2: SortedSet[BigInt]) {
+  def compareIntersect(n : Int, primeSet: PrimeSet[Long], primeSet2: PrimeSet[Long], sortedSet: SortedSet[Long], sortedSet2: SortedSet[Long]) {
       measureTime ("sorted, set2 intersect set1: ") { 
        repeat (n){
       sortedSet2 intersect sortedSet }
@@ -62,7 +67,7 @@ object ComparePrimeSet {
     
   }
   
-  def compareContains(n : Int, primeSet: PrimeSet[BigInt], primeSet2: PrimeSet[BigInt], sortedSet: SortedSet[BigInt], sortedSet2: SortedSet[BigInt], members: List[BigInt]) {
+  def compareContains(n : Int, primeSet: PrimeSet[Long], primeSet2: PrimeSet[Long], sortedSet: SortedSet[Long], sortedSet2: SortedSet[Long], members: List[Long]) {
      measureTime ("sortedSet.contains: ") {
       repeat (n) {
         for (m <- members) {
@@ -80,7 +85,7 @@ object ComparePrimeSet {
     }
   }
   
-  def compareDelete(n : Int, primeSet: PrimeSet[BigInt], primeSet2: PrimeSet[BigInt], sortedSet: SortedSet[BigInt], sortedSet2: SortedSet[BigInt],members: List[BigInt]) {
+  def compareDelete(n : Int, primeSet: PrimeSet[Long], primeSet2: PrimeSet[Long], sortedSet: SortedSet[Long], sortedSet2: SortedSet[Long],members: List[Long]) {
      measureTime ("sortedSet.delete: ") {
       repeat (n) {
         for (m <- members) {
