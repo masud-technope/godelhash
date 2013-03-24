@@ -3,64 +3,58 @@ package org.ucombinator.godelhash.otherrepresentation
 import scala.collection.mutable.ArrayBuffer
 import org.ucombinator.godelhash.mathmatics.numbertheory.PrimeHashable
 
- class ArraySet[A <% PrimeHashable with Ordered[A]] (arrCBuffer: ArrayBuffer[BigInt]) {
+ class ArraySet[A <% PrimeHashable with Ordered[A]] (arrCBuffer: ArrayBuffer[Long]) {
  
-  val arrBuffer: ArrayBuffer[BigInt] = arrCBuffer
+  val arrBuffer: ArrayBuffer[Long] = arrCBuffer
   
-  def +(n : BigInt) {
+  def +(n : Long) {
     if(!this.isMember(n))
        arrBuffer += n
   }
   
-  def -(n:BigInt){
+  def -(n:Long){
     if(this.isMember(n))
     	arrBuffer -= n
   }
   
-  def union(arrS2: ArraySet[A]) {
-     arrS2.arrBuffer.foreach((e) => {
-       if(! this.isMember(e))//arrBuffer.contains(e))
-         arrBuffer += e
-     })
+  // thsi has to test whether duplicated data is input in so it is slow!
+  def union(arrS2: ArraySet[A]) { 
+     var x = 0
+     while(x < arrS2.arrBuffer.size ) {
+       val ele = arrS2.arrBuffer(x)
+       if(!this.arrBuffer.contains(ele))
+           this.arrBuffer += ele
+       x += 1
+     }
   }
   
+  // direct;y using the --= ops
   def diff(arrS2: ArraySet[A]) {
-     arrS2.arrBuffer.foreach((e) => {
+     /*arrS2.arrBuffer.foreach((e) => {
        if(this.isMember(e))//.contains(e))
          arrBuffer -= e
-     })
+     })*/
+     
+     this.arrBuffer --= arrS2.arrBuffer
   }
   
    
   def subSetOf(arrS2: ArraySet[A] ) : Boolean= {
-    var res = false
+   
     
-   val in = 
-     arrS2.arrBuffer.filter((arrElem)=>{
-      arrS2.isMember(arrElem)
-    })
+    val res = arrS2.arrBuffer -- this.arrBuffer 
     
-    in.length == arrS2.arrBuffer.length
+    res.isEmpty 
+    
   }
   
   def arraySetEqual(arrS2: ArraySet[A] ) : Boolean= {
     this.subSetOf(arrS2) && arrS2.subSetOf(this)
+    
+     //this == arrS2
   }
   
-  def isMember(n: BigInt) : Boolean = {
-    /*
-    val lst = arrBuffer.filter((ae) => {
-      ae == n
-    })
-      lst.length  > 0*/
-    
-   /* var res = false
-    arrBuffer.foreach((arr) => {
-      if(arr == n)
-        res = true
-    })
-    res*/
-  
+  def isMember(n: BigInt) : Boolean = { 
     
     arrBuffer.contains(n)
     
@@ -68,10 +62,19 @@ import org.ucombinator.godelhash.mathmatics.numbertheory.PrimeHashable
   }
   
   def intersect(arrS2: ArraySet[A] )  = {
-    arrS2.arrBuffer.foreach((e) => {
-       if(!arrBuffer.contains(e))
-         arrBuffer += e
-     })
+   var x = 0
+   var commonElems = new ArrayBuffer[Long](this.arrBuffer.size)
+   
+     while(x < arrS2.arrBuffer.size ) {
+       val ele = arrS2.arrBuffer(x)
+       if(!this.arrBuffer.contains(ele))
+            commonElems += ele
+       x += 1
+     }
+   
+   this.arrBuffer --= this.arrBuffer
+   this.arrBuffer ++= commonElems
+       
   }
   
  

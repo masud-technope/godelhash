@@ -6,9 +6,13 @@ import java.io.ObjectOutputStream
 import org.ucombinator.godelhash.otherrepresentation.ArraySet
 import scala.collection.mutable.ArrayBuffer
 import org.ucombinator.godelhash.benchmark.Benchmark
+import scala.collection.immutable.SortedSet
+ 
  
 
 trait Utils {
+   var lock : AnyRef = new Object()
+  
 implicit def BigIntintToPH(i: BigInt) = new PrimeHashable with Ordered[BigInt]{
   val primeHash: BigInt = i
   def compare(that: BigInt) = primeHash.toInt  - that.toInt
@@ -19,23 +23,69 @@ implicit def LongintToPH(i: Long) = new PrimeHashable with Ordered[Long]{
   def compare(that: Long) = primeHash.toInt  - that.toInt
 }
 
+
 // generatre numberTOGen random number within upperbound
-  def n_rands(nunmberToGen : Int, upperBound: Int)  = {
-	 var r = new scala.util.Random
+// zhi zai 1000 zhijian chansheng
+  def n_rands(nunmberToGen : Int, upperBound: Int)  : List[Int]  = {
+	// var r = new scala.util.Random
  	 val res = 1 to nunmberToGen map { _ =>  
- 	   var tmp = r.nextInt(upperBound) 
- 	   var flag = (tmp == 0)
+ 	   var tmp = scala.util.Random.nextInt % upperBound
+ 	   var flag = (tmp <= 0)
  	   
  	   while(flag){
  	    // println("flag" + tmp.toString, flag)
- 	      tmp =   r.nextInt(upperBound)
- 	      flag = (tmp == 0)
- 	   } 
- 		 
+ 	      tmp =  scala.util.Random.nextInt % upperBound
+ 	      flag = (tmp <= 0)
+ 	   }  
        tmp 
 	 } 
 	 res.toList
   }
+  
+  //def sortedSetEqual(sortedset1: SortedSet[Long], sortedSet2: SortedSet[Long]) : Boolean = {
+    
+  //}
+  
+  // bao zheng 
+ def randWrapper(numberToGen : Int, upperBound :Int) : List[Int] = {
+   
+   val arrBuffer = new ArrayBuffer[Int](numberToGen) 
+    
+   val factor = 1000 
+ 
+  
+  if(numberToGen > 1000) {
+   
+    val f = numberToGen/factor
+    var rest = numberToGen % factor
+       var loopTimes = 0
+    if(rest == 0 ) {
+      while(loopTimes < f) {
+        arrBuffer ++=  n_rands(factor, upperBound)
+        loopTimes += 1   
+      }
+    //  println("he number to generate: " + numberToGen + "length of the rturn " +  arrBuffer.size)
+      arrBuffer.toList
+    }
+    else {
+      while(loopTimes < f-1) {
+        arrBuffer ++=  n_rands(factor, upperBound)
+        loopTimes += 1   
+      }
+      val restNums = numberToGen - loopTimes * factor
+        arrBuffer ++=  n_rands(restNums,upperBound)
+      //  println("he number to generate: " + numberToGen + "length of the rturn " +  arrBuffer.size)
+        arrBuffer.toList
+    }
+  
+  } 
+  else {
+   val res =   n_rands(numberToGen, upperBound)
+     //println("he number to generate: " + numberToGen + "length of the rturn " +  res.length )
+     res
+  }
+}
+
   
   def take_rands(number: Int, upb: Int, primeList: List[Long]): List[Long] = {
     val ranIndexList = n_rands(number, upb)
@@ -45,24 +95,89 @@ implicit def LongintToPH(i: Long) = new PrimeHashable with Ordered[Long]{
     res
   }
   
-  private def getPrimeMembersFromRands(randIndexes: List[Int],  primeList: List[Long]) : List[Long] = {
+  private def getPrimeMembersFromRands(randIndexes: List[Int],  primeList: Array[Long]) : List[Long] = {
     randIndexes.map((index)=> primeList(index))
   }
   
+  private def await(cond: => Boolean) =
+      while (!cond) { lock.wait() }
+  
   def genSetList( setCardi: Int, upb: Int, primeList: List[Long], listSetNo: Int ) : List[PrimeSet[Long]] = {
-   
-    val listofCardiRand =  (1 to listSetNo map ( (_) => n_rands(setCardi, primeList.length ))).toList
-    // listofCardiRand.foreach(println)
-    var cnt = 0
+   import Benchmark._
+    val listofCardiRand = new ArrayBuffer[List[Int]](listSetNo)
     
-    listofCardiRand.map((indexRandList) => {
-      val members = getPrimeMembersFromRands(indexRandList, primeList)//take_rands(indexRand, upb, primeList) 
+    measureTime("gen 1k :") {
+    repeat(listSetNo){
+      listofCardiRand += randWrapper(setCardi, primeList.length )
+    }
+   }
+    
+    //val listofCardiRand =  (1 to listSetNo map ( (_) => randWrapper(setCardi, primeList.length ))).toList 
+  // var lstIndexes = ArrayBuffer[List[Int]]()
+    
+    val lstIndexes = listofCardiRand.toList 
+   
+    println()
+    var cnt = 0 
+      measureTime("gen  primeSet") {
       
-       cnt = cnt + 1
-      val ps = PrimeSet(members: _*)
-      ps 
-    }) 
+      
+      val arrBuffer = measureTime("toArray:") {primeList.toArray}
+      
+     // println("primeList", primeList.length)
+     val listofMemberPrimes = 
+    lstIndexes.map((indexRandList) => {
+     val members =// measureTime("gen") {
+        getPrimeMembersFromRands(indexRandList, arrBuffer)//take_rands(indexRand, upb, primeList) 
+     // }
+       members
+      // cnt = cnt + 1 
+    })
+    
+    // listSetNo threads
+   var x = 0
+   var constructorArrays: ArrayBuffer[PrimeSetConstructorThread] = new ArrayBuffer[PrimeSetConstructorThread](listSetNo)
+   while(x < listSetNo){
+     val pst = new PrimeSetConstructorThread(listofMemberPrimes(x))
+     constructorArrays += pst
+    pst.start()
+     x += 1
+   }
+      
+     
+     println("thread generated: ", constructorArrays.size)
+     // we want to wait for to finish
+     var y = 0
+     measureTime("multifinish") {
+    // lock.synchronized{
+   while(y < listSetNo){ 
+     val pst = constructorArrays(y)
+     //lock.synchronized{
+         pst.join()
+    // }
+     y += 1
+  // }
+ //   lock.notifyAll()
+     }
+     }
+     
+     var primeArr: ArrayBuffer[PrimeSet[Long]] = new ArrayBuffer[PrimeSet[Long]](listSetNo)
+   var z = 0  
+   while(z < listSetNo){
+     val pst = constructorArrays(z)
+       //  val ps = primeArr(z)
+     val psss = pst.ps
+      if(psss != null)
+        primeArr += psss
+        
+      
+     z += 1
+   }
+     primeArr.toList
+    
+    }
   }
+    
   
  
   def genArraySet(  members: List[List[Long]] ): List[ArraySet[Long]] = {
@@ -74,6 +189,8 @@ implicit def LongintToPH(i: Long) = new PrimeHashable with Ordered[Long]{
        arS
     }) 
   }
+  
+  // this is a slow method
   
   def favorListSet(lsp: List[PrimeSet[Long]], cardi: Int) : List[PrimeSet[Long]] = {
     lsp.map((ps) => {
@@ -269,12 +386,8 @@ implicit def LongintToPH(i: Long) = new PrimeHashable with Ordered[Long]{
  
   def printOutArraySetStats(arrayTestPairs:List[(ArraySet[Long], ArraySet[Long])]) {
     import Benchmark._ 
-     measureTime ("------------ array  <=   "){ 
-    
-      for((arrset1, arrset2) <- arrayTestPairs){
-        arrset1 subSetOf arrset2
-      }
-     }
+     
+   
     
         measureTime ("------------ array  equality   "){ 
     
@@ -282,15 +395,25 @@ implicit def LongintToPH(i: Long) = new PrimeHashable with Ordered[Long]{
         arrset1 arraySetEqual arrset2
       }
      }
+   
      
-     
+    
+      measureTime ("------------ array  <=   "){ 
+    
+      for((arrset1, arrset2) <- arrayTestPairs){
+        arrset1 subSetOf arrset2
+      }
+     }
+      
+       
      measureTime ("------------ array  union   "){ 
     
       for((arrset1, arrset2) <- arrayTestPairs){
         arrset1 union arrset2
       }
-     }
+     } 
      
+      
       measureTime ("------------ arrar  diff   "){ 
     
       for((arrset1, arrset2) <- arrayTestPairs){
@@ -316,14 +439,18 @@ implicit def LongintToPH(i: Long) = new PrimeHashable with Ordered[Long]{
          measureTime ("------------ array  delete   "){ 
     
      for((arrset1, arrset2) <- arrayTestPairs){
-        arrset1 - arrset2.arrBuffer.toList.head
+       val hlst = arrset2.arrBuffer.toList 
+       if(! hlst.isEmpty)
+        arrset1 - hlst.head
       }
      }
          
             measureTime ("------------ array  insert   "){ 
     
      for((arrset1, arrset2) <- arrayTestPairs){
-        arrset1 + arrset2.arrBuffer.head
+        val hlst = arrset2.arrBuffer.toList 
+       if(! hlst.isEmpty)
+        arrset1 + hlst.head
       }
      }
     println()
@@ -331,25 +458,28 @@ implicit def LongintToPH(i: Long) = new PrimeHashable with Ordered[Long]{
   
   def printOutOrderedSetStats(testSetpairs: List[(PrimeSet[Long], PrimeSet[Long])]) {
     import Benchmark._
-    measureTime ("------------ sorted  <=   "){ 
-    
-      for((primeSet1, primeSet2) <- testSetpairs){
-         primeSet2.members subsetOf primeSet1.members
-      }
-     }
+  
        measureTime ("------------ sorted  equality   "){ 
     
       for((primeSet1, primeSet2) <- testSetpairs){
          primeSet2.members.equals(primeSet1.members) 
       }
      }
-       measureTime ("------------ sorted  union   "){ 
+      
+      
+       measureTime ("------------ sorted  <=   "){ 
+    
+      for((primeSet1, primeSet2) <- testSetpairs){
+         primeSet2.members subsetOf primeSet1.members
+      }
+     }
+       
+        measureTime ("------------ sorted  union   "){ 
     
       for((primeSet1, primeSet2) <- testSetpairs){
          primeSet2.members union primeSet1.members
       }
      }
-       
         
        measureTime ("------------ sorted  diff   "){ 
     

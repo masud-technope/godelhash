@@ -5,9 +5,11 @@ import scala.collection.mutable.ArrayBuffer
 import scala.io.Source
 import java.util.ArrayList
 
+
+
 class FastParseInPrimesFile(var filename: String, var estimateNums : Int) {
  
-  
+   
   def readNumbers  : ArrayBuffer[Long] = {
     var llst : ArrayBuffer[Long] = null
     var  fis : FileInputStream = null
@@ -53,7 +55,8 @@ class FastParseInPrimesFile(var filename: String, var estimateNums : Int) {
           }
           i+=1
         }
-     } 
+     }
+    fis.close()
     llst 
   }
   

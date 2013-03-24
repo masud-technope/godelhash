@@ -60,4 +60,7 @@ object PrimeSet {
   
   def apply[A <% PrimeHashable with Ordered[A]] (vals : A*) = 
     new PrimeSet[A](vals.foldLeft (BigInt(1)) ((ans,v) => ans * v.primeHash),TreeSet[A]() ++ vals.toList)
+  
+     def apply[A <% PrimeHashable with Ordered[A]] ( mul: Boolean,vals : A*) = 
+         new PrimeSet[A](vals.foldLeft (BigInt(1)) ((ans,v) => ans * v.primeHash),TreeSet[A]()  )
 }
