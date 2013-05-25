@@ -51,10 +51,13 @@ object CompareTime3 extends Utils{
    //   
     //  println("space usage for all sorted set ", as)
        
+         // printOutArraySetStats(arrayTestPairs)
+      
+      printOutPrimeSetStats(testSetpairs)
      
-     // printOutPrimeSetStats(testSetpairs)
-     printOutOrderedSetStats(testSetpairs)
-    // printOutArraySetStats(arrayTestPairs)
+     
+
+    //  printOutPrimeSetStats(testSetpairs)
     
    
   }
@@ -63,7 +66,7 @@ object CompareTime3 extends Utils{
      val setCardi =     (univerSize * density).toInt
     println("setCardi: ", setCardi)
     
-    val numberofSets = 100// 1k
+    val numberofSets = 10// 1k
     // the key space
    // println("total keyspace size: ", primes.length)
     val members = primes.take(univerSize).toList
@@ -88,15 +91,15 @@ object CompareTime3 extends Utils{
       val testSetpairs = measureTime("zip ") { allTestSets1.zip(allTestSets2)}
       
       // array set pair
-      val noBitsPrimeSet = measureTime("size1 ") { noOfBitsToRepresentGodelHashSet(allTestSets1)}
-      val boBitsSortSet = measureTime("size2 ") { noOfBitsToRepresentSortedHashSet(allTestSets1)}
+     // val noBitsPrimeSet = measureTime("size1 ") { noOfBitsToRepresentGodelHashSet(allTestSets1)}
+     // val boBitsSortSet = measureTime("size2 ") { noOfBitsToRepresentSortedHashSet(allTestSets1)}
       val noBitsArraySet = measureTime("size3 ") {noOfBitsToRepresentArraySet(arrSet1)}
       
       
        println("\nspace usage for the three: \n")
-       println("GodelHash:  "+ noBitsPrimeSet)
+      // println("GodelHash:  "+ noBitsPrimeSet)
         println("ArraySet:  "+ noBitsArraySet)
-         println("SortedSet:  "+ boBitsSortSet)
+       //  println("SortedSet:  "+ boBitsSortSet)
      
      
        
@@ -113,44 +116,49 @@ object CompareTime3 extends Utils{
     }
     
         val len = primes.size
-   println("number of generated primes generated is: ", len)
-     println("-----100")    
-    //timeParameters(0.1, 100, primes)
+  // println("number of generated primes generated is: ", len)
+     //println("-----100")    
+  //  timeParameters(0.1, 100, primes)
      println()
-   //timeParameters(0.3, 100, primes)
+  // timeParameters(0.3, 100, primes)
    println()
   // timeParameters(0.5, 100, primes)
       println()
    //timeParameters(0.75, 100, primes)
    
-    println("-----1000")    
-   //timeParameters(0.1, 1000, primes)
-     println()
-  // timeParameters(0.3, 1000, primes)
-   println()
-   //timeParameters(0.5, 1000, primes)
-      println()
-  //timeParameters(0.75, 1000, primes)
+   // println("-----1000")    
+//   timeParameters(0.1, 1000, primes)
+//     println()
+//   timeParameters(0.3, 1000, primes)
+//   println()
+//  timeParameters(0.5, 1000, primes)
+//      println()
+//  timeParameters(0.75, 1000, primes)
    
-     println("-----10000")    
+    // println("-----10000")    
   // timeParameters(0.1, 10000, primes)
      println()
-//   timeParameters(0.3, 10000, primes)
+  // timeParameters(0.3, 10000, primes)
    println()
- //  timeParameters(0.5, 10000, primes)
+  //timeParameters(0.5, 10000, primes)
       println()
   // timeParameters(0.75, 10000, primes)
    
   
-      println("-----100000") 
-  // timeParameters(0.1, 100000, primes)
+    //  println("-----100000") 
+   timeParameters(0.1, 100000, primes)
      println()
-  // timeParameters(0.3, 100000, primes)
+  //timeParameters(0.3, 100000, primes)
    println()
    //timeParameters(0.5, 100000, primes)
       println()
-   //timeParameters(0.75, 100000, primes)
+  // timeParameters(0.75, 100000, primes)
  
+      
+      
+      
+      
+      
  /*        println("\n------------------ Universe= 10")
     sizeParameterize3(0.1, 10, primes)
      println()
@@ -178,7 +186,7 @@ object CompareTime3 extends Utils{
       println()
    sizeParameterize3(0.75, 1000, primes) */
    
-     println("\n------------------ Universe= 10K")
+    /* println("\n------------------ Universe= 10K")
         measureTime("sp1:") {
            sizeParameterize3(0.1, 10000, primes)
      println()
@@ -190,10 +198,10 @@ object CompareTime3 extends Utils{
         measureTime("sp3:") {
            sizeParameterize3(0.5, 10000, primes)
       println()
-        }
-        measureTime("sp4:") {
-          sizeParameterize3(0.75, 10000, primes) 
-        }
+        }*/
+      /*  measureTime("sp4:") {
+          sizeParameterize3(0.85, 10000, primes) 
+        }*/
    
   
   

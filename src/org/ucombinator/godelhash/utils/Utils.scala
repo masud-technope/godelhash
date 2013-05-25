@@ -329,27 +329,22 @@ implicit def LongintToPH(i: Long) = new PrimeHashable with Ordered[Long]{
      }
   
   
-      measureTime ("------------ prime  equality   "){ 
+      /*measureTime ("------------ prime  equality   "){ 
     
       for((primeSet1, primeSet2) <- testSetpairs){
          primeSet2.PSEqual(primeSet1) 
       }
      }
       
-  
-   measureTime ("------------ prime  union   "){ 
+*/  
+  /* measureTime ("------------ prime  union   "){ 
     
       for((primeSet1, primeSet2) <- testSetpairs){
          primeSet2 union primeSet1
       }
      }
    
-     measureTime ("------------ prime  diff  "){ 
     
-      for((primeSet1, primeSet2) <- testSetpairs){
-         primeSet2 diff primeSet1
-      }
-     }
      
         measureTime ("------------ prime  intersect   "){ 
     
@@ -357,28 +352,36 @@ implicit def LongintToPH(i: Long) = new PrimeHashable with Ordered[Long]{
          primeSet2 intersect primeSet1
       }
      }
-        
+       */ 
+     val m = testSetpairs.head._1.members.head
          measureTime ("------------ prime  contains  "){ 
-    
+   
       for((primeSet1, primeSet2) <- testSetpairs){
-         primeSet2 contains primeSet1.members.head
+         primeSet2 contains m//primeSet1.members.head
       }
      }
          
-            measureTime ("------------ prime  delete   "){ 
+        /*    measureTime ("------------ prime  delete   "){ 
     
       for((primeSet1, primeSet2) <- testSetpairs){
          primeSet2 - primeSet1.members.head
       }
-     }
+     }*/
             
-         measureTime ("------------ prime  insert   "){ 
+      /*   measureTime ("------------ prime  insert   "){ 
     
       for((primeSet1, primeSet2) <- testSetpairs){
          primeSet2 + primeSet1.members.head
       }
-     }
+     }*/
          
+       /*   measureTime ("------------ prime  diff  "){ 
+    
+      for((primeSet1, primeSet2) <- testSetpairs){
+         primeSet2 diff primeSet1
+      }
+     }
+         */
          
         println()
       
@@ -389,7 +392,7 @@ implicit def LongintToPH(i: Long) = new PrimeHashable with Ordered[Long]{
      
    
     
-        measureTime ("------------ array  equality   "){ 
+      /*  measureTime ("------------ array  equality   "){ 
     
      for((arrset1, arrset2) <- arrayTestPairs){
         arrset1 arraySetEqual arrset2
@@ -411,16 +414,16 @@ implicit def LongintToPH(i: Long) = new PrimeHashable with Ordered[Long]{
       for((arrset1, arrset2) <- arrayTestPairs){
         arrset1 union arrset2
       }
-     } 
+     } */
      
       
-      measureTime ("------------ arrar  diff   "){ 
+   /*   measureTime ("------------ arrar  diff   "){ 
     
       for((arrset1, arrset2) <- arrayTestPairs){
         arrset1 diff arrset2
       }
      }
-      
+      */
          measureTime ("------------ arrar  intersect  "){ 
     
      for((arrset1, arrset2) <- arrayTestPairs){
@@ -429,21 +432,22 @@ implicit def LongintToPH(i: Long) = new PrimeHashable with Ordered[Long]{
      }
          
           
-       measureTime ("------------ arrar  contains  "){ 
+      /* measureTime ("------------ arrar  contains  "){ 
     
       for((arrset1, arrset2) <- arrayTestPairs){
         arrset1 isMember arrset2.arrBuffer.head
       }
-     }
+     }*/
          
-         measureTime ("------------ array  delete   "){ 
+  
+    /*measureTime ("------------ array  delete   "){ 
     
      for((arrset1, arrset2) <- arrayTestPairs){
        val hlst = arrset2.arrBuffer.toList 
        if(! hlst.isEmpty)
         arrset1 - hlst.head
       }
-     }
+     }*/
          
             measureTime ("------------ array  insert   "){ 
     
@@ -459,29 +463,32 @@ implicit def LongintToPH(i: Long) = new PrimeHashable with Ordered[Long]{
   def printOutOrderedSetStats(testSetpairs: List[(PrimeSet[Long], PrimeSet[Long])]) {
     import Benchmark._
   
-       measureTime ("------------ sorted  equality   "){ 
+    /*   measureTime ("------------ sorted  equality   "){ 
     
       for((primeSet1, primeSet2) <- testSetpairs){
-         primeSet2.members.equals(primeSet1.members) 
+        val mem1 = primeSet2.members
+        val mem2 = primeSet1.members
+        mem1.subsetOf(mem2) && mem2.subsetOf(mem1)
+         
       }
-     }
+     }*/
       
       
-       measureTime ("------------ sorted  <=   "){ 
+     /*  measureTime ("------------ sorted  <=   "){ 
     
       for((primeSet1, primeSet2) <- testSetpairs){
          primeSet2.members subsetOf primeSet1.members
-      }
-     }
+      }*/
+     
        
-        measureTime ("------------ sorted  union   "){ 
+      //  measureTime ("------------ sorted  union   "){ 
     
-      for((primeSet1, primeSet2) <- testSetpairs){
+    /*  for((primeSet1, primeSet2) <- testSetpairs){
          primeSet2.members union primeSet1.members
       }
-     }
+     }*/
         
-       measureTime ("------------ sorted  diff   "){ 
+      /*measureTime ("------------ sorted  diff   "){ 
     
       for((primeSet1, primeSet2) <- testSetpairs){
          primeSet2.members diff primeSet1.members
@@ -494,7 +501,7 @@ implicit def LongintToPH(i: Long) = new PrimeHashable with Ordered[Long]{
       for((primeSet1, primeSet2) <- testSetpairs){
          primeSet2.members intersect primeSet1.members
       }
-     }
+     }*/
        
         measureTime ("------------ sorted  contains  "){ 
     
@@ -504,25 +511,20 @@ implicit def LongintToPH(i: Long) = new PrimeHashable with Ordered[Long]{
       }
      }
         
-         measureTime ("------------ sorted  delete   "){ 
+    /*    measureTime ("------------ sorted  delete   "){ 
     
       for((primeSet1, primeSet2) <- testSetpairs){
          primeSet2.members - primeSet1.members.head
       }
-     }
+     }*/
          
-          measureTime ("------------ sorted  insert   "){ 
+    /*      measureTime ("------------ sorted  insert   "){ 
     
       for((primeSet1, primeSet2) <- testSetpairs){
          primeSet2.members + primeSet1.members.head
-      }
-     }
-          println()
-     
+      } */
+  
   }
-  
-  
-  
  
 
 }

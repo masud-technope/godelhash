@@ -21,7 +21,7 @@ import scala.collection.immutable.SortedSet
     }
   }
    
-  def contains(h : PrimeHashable) = (modop(comp, h.primeHash)) == 0
+  def contains(h : PrimeHashable) = (comp %  h.primeHash) == 0
   
   def isSubsetOf (b : PrimeSet[A]) : Boolean = (b.comp % comp) == 0
 
