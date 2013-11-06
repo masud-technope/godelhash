@@ -1,0 +1,334 @@
+scala -J-Xmx5g -J-Xms5g -J-Xss8192m  -classpath bin org.ucombinator.datastructure.benchmark.CompareTime3 --time --primeset 0.1 100000
+(read,501959790)
+new Generating primes: 4417ms
+0.1
+100000
+-----100000, 0.1
+(setCardi: ,10000)
+gen 1k :2196ms
+
+toArray:15ms
+(thread generated: ,100)
+multifinish3555ms
+gen  primeSet11940ms
+generate the tste set14138ms
+------------ prime  <=  19ms
+------------ prime  =  1ms
+------------ prime  union   19259ms
+------------ prime  difference   868ms
+------------ prime  intersect   2747ms
+------------ prime  contains  14ms
+------------ prime  delete   15ms
+------------ prime  insert   16ms
+
+
+
+
+
+
+
+
+
+
+scala -J-Xmx5g -J-Xms5g -J-Xss8192m  -classpath bin org.ucombinator.datastructure.benchmark.CompareTime3 --time --primeset 0.3 100000
+(read,501959790)
+new Generating primes: 4421ms
+0.3
+100000
+-----100000, 0.3
+(setCardi: ,30000)
+gen 1k :2339ms
+
+toArray:14ms
+(thread generated: ,100)
+multifinish16221ms
+gen  primeSet18323ms
+generate the tste set20664ms
+------------ prime  <=  42ms
+------------ prime  =  1ms
+------------ prime  union   163902ms
+------------ prime  difference   2581ms
+------------ prime  intersect   8142ms
+------------ prime  contains  36ms
+------------ prime  delete   49ms
+------------ prime  insert   43ms
+
+
+
+
+
+
+
+
+
+
+scala -J-Xmx5g -J-Xms5g -J-Xss8192m  -classpath bin org.ucombinator.datastructure.benchmark.CompareTime3 --time --primeset 0.5 100000
+(read,501959790)
+new Generating primes: 4569ms
+0.5
+100000
+-----100000
+(setCardi: ,50000)
+gen 1k :2747ms
+
+toArray:15ms
+(thread generated: ,100)
+multifinish59403ms
+gen  primeSet61438ms
+generate the tste set64187ms
+------------ prime  <=  56ms
+------------ prime  =  2ms
+------------ prime  union   430261ms
+------------ prime  difference   3985ms
+------------ prime  intersect   13230ms
+------------ prime  contains  58ms
+------------ prime  delete   84ms
+------------ prime  insert   68ms
+
+
+
+
+
+
+
+
+
+
+scala -J-Xmx5g -J-Xms5g -J-Xss8192m  -classpath bin org.ucombinator.datastructure.benchmark.CompareTime3 --time --primeset 0.75 100000
+(read,501959790)
+new Generating primes: 4527ms
+0.75
+100000
+-----100000, 0.75
+(setCardi: ,75000)
+gen 1k :2960ms
+
+toArray:15ms
+(thread generated: ,100)
+multifinish108685ms
+gen  primeSet110767ms
+generate the tste set113729ms
+------------ prime  <=  81ms
+------------ prime  =  2ms
+------------ prime  union   1023559ms
+------------ prime  difference   5096ms
+------------ prime  intersect   17216ms
+------------ prime  contains  86ms
+------------ prime  delete   136ms
+------------ prime  insert   96ms
+
+
+
+
+
+
+
+
+
+
+scala -J-Xmx5g -J-Xms5g -J-Xss8192m  -classpath bin org.ucombinator.datastructure.benchmark.CompareTime3 --time --sorted-treeset 0.1 100000
+(read,501959790)
+new Generating primes: 4509ms
+0.1
+100000
+-----100000, 0.1
+(setCardi: ,10000)
+gen 1k :2374ms
+
+toArray:14ms
+(thread generated: ,100)
+multifinish8831ms
+gen  primeSet12608ms
+generate the tste set14984ms
+------------ sorted  <=   1847ms
+------------ sorted tree  equality   3663ms
+------------ sorted tree union   1496ms
+------------ sorted tree diff   860ms
+------------ sorted tree intersect  2908ms
+------------ sorted tree contains  2ms
+------------ sorted tree delete   2ms
+------------ sorted tree  insert   2ms
+
+
+
+
+
+
+
+
+
+
+scala -J-Xmx5g -J-Xms5g -J-Xss8192m  -classpath bin org.ucombinator.datastructure.benchmark.CompareTime3 --time --sorted-treeset 0.3 100000
+(read,501959790)
+new Generating primes: 4496ms
+0.3
+100000
+-----100000, 0.3
+(setCardi: ,30000)
+gen 1k :2535ms
+
+toArray:14ms
+(thread generated: ,100)
+multifinish15467ms
+gen  primeSet18032ms
+generate the tste set20568ms
+------------ sorted  <=   5020ms
+------------ sorted tree  equality   9111ms
+------------ sorted tree union   4183ms
+------------ sorted tree diff   2553ms
+------------ sorted tree intersect  8396ms
+------------ sorted tree contains  2ms
+------------ sorted tree delete   1ms
+------------ sorted tree  insert   2ms
+
+
+
+
+
+
+
+
+
+
+scala -J-Xmx5g -J-Xms5g -J-Xss8192m  -classpath bin org.ucombinator.datastructure.benchmark.CompareTime3 --time --sorted-treeset 0.5 100000
+(read,501959790)
+new Generating primes: 4506ms
+0.5
+100000
+-----100000
+(setCardi: ,50000)
+gen 1k :2677ms
+
+toArray:14ms
+(thread generated: ,100)
+multifinish60480ms
+gen  primeSet62362ms
+generate the tste set65041ms
+------------ sorted  <=   8165ms
+------------ sorted tree  equality   14686ms
+------------ sorted tree union   6590ms
+------------ sorted tree diff   3855ms
+------------ sorted tree intersect  13263ms
+------------ sorted tree contains  3ms
+------------ sorted tree delete   2ms
+------------ sorted tree  insert   2ms
+
+
+
+
+
+
+
+
+
+
+scala -J-Xmx5g -J-Xms5g -J-Xss8192m  -classpath bin org.ucombinator.datastructure.benchmark.CompareTime3 --time --sorted-treeset 0.75 100000
+(read,501959790)
+new Generating primes: 4497ms
+0.75
+100000
+-----100000, 0.75
+(setCardi: ,75000)
+gen numer of sets :2926ms
+
+toArray:15ms
+(thread generated: ,100)
+multifinish93420ms
+gen  primeSet115315ms
+generate the tste set118244ms
+------------ sorted  <=   11545ms
+------------ sorted tree  equality   20173ms
+------------ sorted tree union   8804ms
+------------ sorted tree diff   5211ms
+------------ sorted tree intersect  17820ms
+------------ sorted tree contains  2ms
+------------ sorted tree delete   2ms
+------------ sorted tree  insert   1ms
+
+
+
+
+
+
+
+
+
+
+scala -J-Xmx5g -J-Xms5g -J-Xss8192m  -classpath bin org.ucombinator.datastructure.benchmark.CompareTime3 --time --sorted-arrayset 0.1 100000
+(read,501959790)
+new Generating primes: 4389ms
+0.1
+100000
+-----100000, 0.1
+(setCardi: ,10000)
+gen numer of sets :2125ms
+
+toArray:15ms
+(thread generated: ,100)
+multifinish7211ms
+gen  primeSet12006ms
+generate the tste set14133ms
+------------ SortedArraySet  <=   49ms
+------------ SortedArraySet  =   48ms
+------------ SortedArraySet  union   77ms
+------------ Sorted Array Set diff  30ms
+------------ SortedArraySet  intersect  54ms
+------------ Sorted Array Set contains  3ms
+------------ Sorted Array Set deletion  13ms
+------------ Sorted Array Set insertion  10ms
+
+
+
+
+
+
+
+
+
+
+scala -J-Xmx5g -J-Xms5g -J-Xss8192m  -classpath bin org.ucombinator.datastructure.benchmark.CompareTime3 --time --sorted-arrayset 0.3 100000
+(read,501959790)
+new Generating primes: 4444ms
+0.3
+100000
+-----100000, 0.3
+(setCardi: ,30000)
+gen numer of sets :2303ms
+
+toArray:14ms
+(thread generated: ,100)
+multifinish16355ms
+gen  primeSet18705ms
+generate the tste set21010ms
+------------ SortedArraySet  <=   70ms
+------------ SortedArraySet  =   65ms
+------------ SortedArraySet  union   118ms
+------------ Sorted Array Set diff  40ms
+------------ SortedArraySet  intersect  90ms
+------------ Sorted Array Set contains  4ms
+------------ Sorted Array Set deletion  15ms
+------------ Sorted Array Set insertion  12ms
+
+
+
+
+
+
+
+
+
+
+scala -J-Xmx5g -J-Xms5g -J-Xss8192m  -classpath bin org.ucombinator.datastructure.benchmark.CompareTime3 --time --sorted-arrayset 0.5 100000
+(read,501959790)
+new Generating primes: 4456ms
+0.5
+100000
+-----100000
+(setCardi: ,50000)
+gen numer of sets :2485ms
+
+toArray:14ms
+(thread generated: ,100)
+multifinish40873ms
+gen  primeSet61871ms
+generate the tste set64358ms

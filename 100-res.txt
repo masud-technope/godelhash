@@ -1,0 +1,14 @@
+scala -J-Xmx5g -J-Xms5g -J-Xss8192m  -classpath bin org.ucombinator.datastructure.benchmark.CompareTime3 --time --primeset 0.1 100
+(read,501959790)
+new Generating primes: 4390ms
+0.1
+100
+-----100
+(setCardi: ,10)
+gen 1k :15ms
+
+toArray:0ms
+(thread generated: ,100)
+multifinish13ms
+gen  primeSet1915ms
+generate the tste set1934ms

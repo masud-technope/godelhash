@@ -6,13 +6,13 @@ import java.io.FileInputStream
 import java.nio.channels.FileChannel.MapMode._
 import java.nio.ByteBuffer
 import java.io.RandomAccessFile
-import org.ucombinator.godelhash.benchmark.Benchmark
+import org.ucombinator.datastructure.benchmark.Benchmark
 import java.io.ObjectOutputStream
 import java.io.FileOutputStream
 import java.io.ObjectInputStream
 
 object ParseInPrimes {
-   import Benchmark._
+   import  Benchmark._
   def offsetTable : List[Int] = List[Int]()
   
   def buildIndexInfo(buf: ByteBuffer) {

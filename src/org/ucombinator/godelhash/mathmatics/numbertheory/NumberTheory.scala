@@ -1,5 +1,5 @@
-package  org.ucombinator.godelhash.mathmatics.numbertheory ;
-
+package  org.ucombinator.godelhash.mathmatics.numbertheory 
+//import org.ucombinator.datastructure.utils.BigInt
 
 trait PrimeHashable {
   def primeHash : BigInt // Must be a prime.

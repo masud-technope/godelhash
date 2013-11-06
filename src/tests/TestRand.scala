@@ -1,8 +1,8 @@
 package tests
-import org.ucombinator.godelhash.utils.FastParseInPrimesFile
+import org.ucombinator.datastructure.utils.FastParseInPrimesFile
 import scala.collection.mutable.ArrayBuffer
-import org.ucombinator.godelhash.benchmark.Benchmark
-import org.ucombinator.godelhash.utils.Utils
+import org.ucombinator.datastructure.benchmark.Benchmark
+import org.ucombinator.datastructure.utils.Utils
 
 object TestRand extends Utils{
   
@@ -23,7 +23,7 @@ object TestRand extends Utils{
          val allTestSets1 = measureTime("generate the set: ") {
        genSetList(1000,  10000 , members, 10000 )  
      }*/
-   val arrBuffer = new ArrayBuffer[List[Int]](5000)
+/*   val arrBuffer = new ArrayBuffer[List[Int]](5000)
    
    measureTime("test n rands ") {
      repeat(500) {
@@ -33,7 +33,22 @@ object TestRand extends Utils{
      //res.foreach(println)
      arrBuffer.toList
    }
+   }*/   
+ //}
+   var num = 0
+   var i = 0 
+   measureTime("1000-addition ") {
+   while(i< 1000) {
+     num = num +1
+     i = i+1}
    }
-    
+ 
+  var j = 0
+   measureTime("1000-multiplication ") {
+	   while(j < 1000) {
+		   num = num * num
+		   j = j +1
+	   }
+   }
  }
 }

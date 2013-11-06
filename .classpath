@@ -5,5 +5,10 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="lib" path="/Users/shuying/Documents/bk/wk_if/GodelHash/lib/scala-compiler-src.jar"/>
 	<classpathentry kind="lib" path="/Users/shuying/Documents/bk/wk_if/GodelHash/lib/scala-compiler.jar"/>
+	<classpathentry kind="lib" path="/Users/shuying/Documents/bk/wk_if/GodelHash/lib/GMP.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="/Users/shuying/Documents/bk/wk_if/GodelHash/lib"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
